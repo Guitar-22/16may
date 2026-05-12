@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Invitation — May 16</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Caveat:wght@400;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+
+/* ===== RESET ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Nunito',sans-serif;}
+
+/* ===== VARIABLES ===== */
+:root{
+  --sky:#b8d9f0; --sky2:#d4eaf8; --cream:#fdf6ec; --warm:#fefcf7;
+  --navy:#2c3e5c; --navy2:#3d5275; --pink:#f2b8c6; --peach:#f8d5b0;
+  --sage:#b8d4b8; --gold:#d4a853; --text:#3a4a5c; --muted:#7a8a9c;
+}
+
+/* ===== BACKGROUND ===== */
+body{
+  background:linear-gradient(160deg,var(--sky2) 0%,var(--sky) 50%,#c5dff5 80%,#d0e8f5 100%);
+  position:relative;
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.45;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+}
+
+/* ===== CLOUDS ===== */
+.clouds{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.cld{position:absolute;background:rgba(255,255,255,.72);border-radius:60px;filter:blur(1px);}
+.cld::before,.cld::after{content:'';position:absolute;background:rgba(255,255,255,.72);border-radius:50%;}
+.c1{width:180px;height:50px;top:7%;left:-230px;animation:drift 38s linear infinite;}
+.c1::before{width:70px;height:70px;top:-36px;left:22px;}
+.c1::after{width:90px;height:58px;top:-30px;left:65px;}
+.c2{width:130px;height:38px;top:22%;left:-165px;animation:drift 50s linear 10s infinite;opacity:.62;}
+.c2::before{width:50px;height:50px;top:-26px;left:15px;}
+.c2::after{width:65px;height:44px;top:-20px;left:48px;}
+.c3{width:215px;height:58px;top:4%;left:-265px;animation:drift 62s linear 24s infinite;opacity:.48;}
+.c3::before{width:82px;height:82px;top:-42px;left:28px;}
+.c3::after{width:108px;height:68px;top:-35px;left:80px;}
+.c4{width:155px;height:44px;top:38%;left:-195px;animation:drift 44s linear 18s infinite;opacity:.58;}
+.c4::before{width:60px;height:60px;top:-32px;left:18px;}
+.c4::after{width:76px;height:50px;top:-24px;left:56px;}
+.c5{width:100px;height:30px;top:62%;left:-130px;animation:drift 35s linear 5s infinite;opacity:.38;}
+.c5::before{width:42px;height:42px;top:-22px;left:10px;}
+.c5::after{width:55px;height:36px;top:-16px;left:36px;}
+@keyframes drift{from{transform:translateX(0);}to{transform:translateX(calc(100vw + 290px));}}
+
+/* ===== PETALS ===== */
+.petals{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden;}
+.petal{position:absolute;top:-20px;border-radius:50% 0 50% 0;animation:fall linear infinite;opacity:0;}
+@keyframes fall{
+  0%{transform:translateY(-20px) rotate(0deg) translateX(0);opacity:.8;}
+  45%{opacity:.7;}
+  85%{transform:translateY(85vh) rotate(280deg) translateX(38px);opacity:.4;}
+  100%{transform:translateY(115vh) rotate(400deg) translateX(-18px);opacity:0;}
+}
+
+/* ===== PAGE SYSTEM ===== */
+.page{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  z-index:10;padding:16px;overflow-y:auto;
+  opacity:0;transform:translateY(34px) scale(.975);pointer-events:none;
+  transition:opacity .65s cubic-bezier(.4,0,.2,1),transform .65s cubic-bezier(.4,0,.2,1);
+}
+.page.active{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+.page.exit{opacity:0;transform:translateY(-34px) scale(.975);pointer-events:none;}
+
+/* ===== CARD BASE ===== */
+.card{
+  background:rgba(253,248,240,.96);border-radius:28px;padding:40px 44px;
+  max-width:520px;width:100%;position:relative;
+  box-shadow:0 12px 40px rgba(44,62,92,.09),0 2px 10px rgba(44,62,92,.05),inset 0 1px 0 rgba(255,255,255,.95);
+}
+.card-wide{max-width:580px;}
+
+/* washi tape */
+.card::before{
+  content:'';position:absolute;top:-7px;left:44px;
+  width:64px;height:14px;border-radius:3px;
+  background:rgba(242,184,198,.55);transform:rotate(-1.5deg);
+}
+.card.tw::before{background:rgba(212,168,83,.45);}
+.card.ts::before{background:rgba(184,212,184,.62);}
+.card.tb::before{background:rgba(184,217,240,.7);}
+
+/* stamp */
+.stamp{
+  position:absolute;top:16px;right:18px;width:40px;height:48px;
+  border:2px solid rgba(44,62,92,.16);border-radius:3px;
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+  background:rgba(248,213,176,.28);
+}
+
+/* ===== TYPOGRAPHY ===== */
+.ttl{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4vw,1.9rem);color:var(--navy);line-height:1.38;margin-bottom:10px;letter-spacing:-.01em;}
+.ttl-i{font-style:italic;}
+.deco{font-family:'Caveat',cursive;font-size:1rem;color:var(--muted);letter-spacing:.07em;margin-bottom:10px;text-align:center;}
+.greeting{font-family:'Caveat',cursive;font-size:1.4rem;color:var(--navy);margin-bottom:12px;font-weight:600;}
+.body{font-size:1rem;line-height:1.92;color:var(--text);margin-bottom:16px;font-weight:400;letter-spacing:.01em;}
+.sig{font-family:'Caveat',cursive;font-size:1.08rem;color:var(--muted);text-align:center;margin:4px 0 18px;}
+
+/* divider */
+.dv{display:flex;align-items:center;gap:12px;margin:14px 0;}
+.dv::before,.dv::after{content:'';flex:1;height:1px;background:rgba(44,62,92,.12);}
+.dv span{font-size:.88rem;opacity:.4;}
+
+/* chip */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(184,212,184,.38);border:1.5px solid rgba(100,160,100,.2);
+  border-radius:50px;padding:5px 14px;font-family:'Caveat',cursive;font-size:1rem;color:var(--text);
+  margin-bottom:14px;
+}
+
+/* stars deco */
+.stars{display:flex;gap:8px;justify-content:center;margin:8px 0;}
+.stars span{font-size:.68rem;color:var(--gold);opacity:.55;}
+
+/* ===== BUTTONS ===== */
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;align-items:center;}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;padding:11px 26px;
+  border-radius:50px;border:none;cursor:pointer;font-family:'Caveat',cursive;
+  font-size:1.06rem;font-weight:600;transition:all .25s cubic-bezier(.4,0,.2,1);
+  text-decoration:none;white-space:nowrap;
+}
+.bp{background:var(--navy);color:#fdf8f0;box-shadow:0 3px 12px rgba(44,62,92,.18);letter-spacing:.02em;}
+.bp:hover{background:var(--navy2);transform:translateY(-2px);box-shadow:0 6px 18px rgba(44,62,92,.22);}
+.bs{background:rgba(44,62,92,.05);color:var(--navy);border:1.5px solid rgba(44,62,92,.14);}
+.bs:hover{background:rgba(44,62,92,.09);transform:translateY(-1px);}
+.bpk{background:rgba(242,184,198,.6);color:var(--navy);box-shadow:0 3px 10px rgba(242,184,198,.3);border:1px solid rgba(242,184,198,.4);}
+.bpk:hover{background:rgba(242,184,198,.8);transform:translateY(-1px);}
+.bm{background:rgba(184,212,184,.55);color:var(--navy);box-shadow:0 3px 10px rgba(184,212,184,.3);border:1px solid rgba(184,212,184,.4);}
+.bm:hover{background:rgba(184,212,184,.75);transform:translateY(-1px);}
+.bg{background:rgba(212,168,83,.85);color:#fff8ee;box-shadow:0 3px 12px rgba(212,168,83,.28);}
+.bg:hover{background:var(--gold);transform:translateY(-2px);}
+
+@keyframes wiggle{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px) rotate(-2deg);}40%{transform:translateX(7px) rotate(2deg);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+.wg{animation:wiggle .45s ease;}
+
+/* no message */
+.nomsg{
+  display:none;background:rgba(248,213,176,.45);border:1.5px solid rgba(212,168,83,.26);
+  border-radius:14px;padding:12px 16px;margin-top:14px;
+  font-family:'Caveat',cursive;font-size:1.04rem;color:var(--text);line-height:1.5;text-align:center;
+}
+.nomsg.show{display:block;animation:fi .4s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== FLOAT ===== */
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+.fl{animation:float 4s ease-in-out infinite;}
+
+/* ===== ENVELOPE (Page 1) ===== */
+.ev-wrap{display:flex;justify-content:center;margin-bottom:22px;}
+.envelope{width:240px;height:168px;position:relative;cursor:pointer;transform-style:preserve-3d;transition:transform .3s ease;}
+.envelope:hover{transform:scale(1.04) translateY(-5px);}
+.ev-body{
+  width:240px;height:168px;position:absolute;bottom:0;
+  background:linear-gradient(150deg,#fdf0d8,#f5e3bc);
+  border-radius:8px 8px 14px 14px;
+  box-shadow:0 12px 40px rgba(44,62,92,.18),inset 0 1px 0 rgba(255,255,255,.8);overflow:hidden;
+}
+.ev-body::before{content:'';position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(180deg,rgba(248,213,176,.25),rgba(242,184,198,.18));}
+.ev-tl{position:absolute;left:0;bottom:0;width:0;height:0;border-style:solid;border-width:84px 0 84px 120px;border-color:transparent transparent transparent rgba(44,62,92,.065);}
+.ev-tr{position:absolute;right:0;bottom:0;width:0;height:0;border-style:solid;border-width:84px 120px 84px 0;border-color:transparent rgba(44,62,92,.065) transparent transparent;}
+.ev-tb{position:absolute;bottom:0;left:0;width:0;height:0;border-style:solid;border-width:0 0 88px 240px;border-color:transparent transparent rgba(44,62,92,.055) transparent;}
+.ev-flap{
+  width:0;height:0;border-style:solid;border-width:88px 120px 0 120px;
+  border-color:#f0d8a8 transparent transparent transparent;
+  position:absolute;top:0;left:0;transform-origin:top center;
+  transition:transform .85s cubic-bezier(.4,0,.2,1);
+  filter:drop-shadow(0 4px 8px rgba(44,62,92,.1));z-index:2;
+}
+.envelope.open .ev-flap{transform:rotateX(180deg);}
+.ev-seal{
+  position:absolute;width:44px;height:44px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#e8a0b0,#c46880);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  box-shadow:0 3px 10px rgba(44,62,92,.2),inset 0 1px 3px rgba(255,255,255,.4);
+  z-index:3;display:flex;align-items:center;justify-content:center;font-size:1.2rem;
+  transition:opacity .3s .3s;
+}
+.envelope.open .ev-seal{opacity:0;}
+.ev-letter{
+  position:absolute;width:200px;left:20px;bottom:20px;background:var(--warm);
+  border-radius:6px;height:108px;display:flex;align-items:center;justify-content:center;
+  font-family:'Caveat',cursive;font-size:.82rem;color:var(--muted);text-align:center;padding:10px;
+  transform:translateY(100%);transition:transform .8s cubic-bezier(.4,0,.2,1) .5s;
+  z-index:1;box-shadow:0 -4px 16px rgba(44,62,92,.07);
+}
+.envelope.open .ev-letter{transform:translateY(18%);}
+
+/* ===== PAGE 1 OPEN CARD ===== */
+.open-card{
+  background:rgba(253,246,236,.88);backdrop-filter:blur(10px);
+  border-radius:26px;padding:42px 36px 34px;max-width:400px;width:100%;
+  text-align:center;
+  box-shadow:0 22px 64px rgba(44,62,92,.13),0 4px 16px rgba(44,62,92,.06),inset 0 1px 0 rgba(255,255,255,.92);
+}
+.op-ttl{font-family:'Playfair Display',serif;font-size:clamp(1rem,3.5vw,1.32rem);color:var(--navy);line-height:1.4;margin-bottom:6px;}
+.op-from{font-family:'Caveat',cursive;font-size:1.04rem;color:var(--muted);margin-bottom:4px;}
+.op-date{font-family:'Playfair Display',serif;font-size:1.22rem;font-style:italic;color:var(--gold);margin-bottom:20px;}
+
+/* ===== CSS ILLUSTRATIONS ===== */
+/* Book */
+.css-book{width:64px;height:82px;position:relative;display:inline-block;}
+.bk-cov{
+  width:64px;height:82px;border-radius:3px 8px 8px 3px;
+  background:linear-gradient(145deg,#7a9cbf,#5a7a9f);
+  box-shadow:4px 4px 0 #3a5a7f,-2px 0 0 #4a6a8f;
+  position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.bk-cov::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:4px;background:rgba(0,0,0,.15);border-radius:2px 0 0 2px;}
+.bk-lines{display:flex;flex-direction:column;gap:6px;padding:14px 10px 14px 16px;}
+.bk-line{height:3px;background:rgba(255,255,255,.5);border-radius:2px;}
+.bk-line:nth-child(2){width:68%;}
+.bk-line:nth-child(3){width:52%;}
+
+/* Flower */
+.css-fl{position:relative;width:36px;height:36px;display:inline-block;}
+.fp{position:absolute;width:11px;height:17px;border-radius:50%;background:var(--pink);top:50%;left:50%;transform-origin:bottom center;opacity:.82;}
+.fp:nth-child(1){transform:translate(-50%,-100%) rotate(0deg);}
+.fp:nth-child(2){transform:translate(-50%,-100%) rotate(72deg);}
+.fp:nth-child(3){transform:translate(-50%,-100%) rotate(144deg);}
+.fp:nth-child(4){transform:translate(-50%,-100%) rotate(216deg);}
+.fp:nth-child(5){transform:translate(-50%,-100%) rotate(288deg);}
+.fc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:var(--gold);}
+
+/* ===== REVIEWS ===== */
+.rv-lbl{font-family:'Caveat',cursive;font-size:1rem;color:var(--muted);text-align:center;margin-bottom:12px;}
+.rv-cards{display:flex;flex-direction:column;gap:10px;}
+.rv-card{background:rgba(255,252,247,.9);border-radius:16px;padding:14px 16px;box-shadow:0 2px 8px rgba(44,62,92,.05);border:1px solid rgba(44,62,92,.06);}
+.rv-hd{display:flex;align-items:center;gap:9px;margin-bottom:6px;}
+.rv-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff;flex-shrink:0;}
+.rv-nm{font-family:'Caveat',cursive;font-size:1.02rem;font-weight:600;color:var(--navy);}
+.rv-st{font-size:.85rem;color:var(--gold);margin-left:auto;}
+.rv-tx{font-size:.86rem;line-height:1.7;color:var(--text);}
+
+/* travel info box */
+.travel-box{
+  background:rgba(184,217,240,.22);border:1.5px solid rgba(184,217,240,.5);
+  border-radius:18px;padding:16px 18px;margin:16px 0;
+}
+.travel-title{font-family:'Caveat',cursive;font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.travel-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;}
+.travel-row:last-child{margin-bottom:0;}
+.travel-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.travel-text{font-size:.9rem;line-height:1.6;color:var(--text);}
+.travel-text strong{color:var(--navy);font-weight:600;}
+
+/* ===== TIMELINE ===== */
+.tl{display:flex;flex-direction:column;gap:17px;margin:16px 0;}
+.tl-item{display:flex;gap:14px;align-items:flex-start;}
+.tl-dot{
+  width:34px;height:34px;border-radius:50%;background:var(--navy);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.95rem;
+  box-shadow:0 4px 12px rgba(44,62,92,.25);position:relative;margin-top:2px;
+}
+.tl-dot::after{content:'';position:absolute;bottom:-19px;left:50%;transform:translateX(-50%);width:1.5px;height:15px;background:rgba(44,62,92,.18);}
+.tl-item:last-child .tl-dot::after{display:none;}
+.tl-ttl{font-family:'Caveat',cursive;font-size:1.18rem;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.tl-sub{font-size:.87rem;color:var(--muted);line-height:1.55;}
+
+/* ===== PROGRESS DOTS ===== */
+.prog{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:50;}
+.pd{width:7px;height:7px;border-radius:50%;background:rgba(44,62,92,.2);transition:all .3s ease;}
+.pd.on{background:var(--navy);transform:scale(1.25);}
+
+/* ===== AMBIENT BTN ===== */
+.amb{
+  position:fixed;bottom:18px;right:18px;z-index:50;width:44px;height:44px;
+  border-radius:50%;border:none;background:rgba(253,246,236,.9);backdrop-filter:blur(8px);
+  cursor:pointer;font-size:1.15rem;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(44,62,92,.15);transition:all .25s ease;
+}
+.amb:hover{transform:scale(1.1);}
+.amb.on{background:rgba(44,62,92,.85);color:#fff;}
+
+/* ===== CELEBRATION ===== */
+.cel{
+  position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:20px;
+  background:rgba(180,220,245,.94);backdrop-filter:blur(10px);
+  opacity:0;pointer-events:none;transition:opacity .55s ease;
+}
+.cel.show{opacity:1;pointer-events:all;}
+.cel-card{
+  background:var(--cream);border-radius:28px;padding:46px 38px;max-width:420px;width:100%;
+  box-shadow:0 28px 80px rgba(44,62,92,.2);text-align:center;
+  animation:bnc .65s cubic-bezier(.4,0,.2,1);
+}
+@keyframes bnc{0%{transform:scale(.78) translateY(28px);opacity:0;}60%{transform:scale(1.04);}100%{transform:scale(1);opacity:1;}}
+.cel-em{font-size:3.8rem;display:block;margin-bottom:14px;animation:bop 1.2s ease infinite;}
+@keyframes bop{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.cel-ttl{font-family:'Playfair Display',serif;font-size:1.72rem;font-style:italic;color:var(--navy);margin-bottom:12px;}
+.cel-msg{font-family:'Caveat',cursive;font-size:1.1rem;color:var(--text);line-height:1.7;margin-bottom:18px;}
+
+#cnv{position:fixed;inset:0;z-index:99;pointer-events:none;opacity:0;transition:opacity .5s;}
+#cnv.show{opacity:1;}
+
+/* ===== SCROLLABLE INNER ===== */
+.inner{max-height:88vh;overflow-y:auto;scrollbar-width:none;}
+.inner::-webkit-scrollbar{display:none;}
+
+/* ===== MIDDLE PAGES — REGULAR FONT (pages 2–6) ===== */
+#pg2 .deco,#pg2 .greeting,#pg2 .chip,#pg2 .nomsg,#pg2 .btn,
+#pg3 .deco,#pg3 .chip,#pg3 .nomsg,#pg3 .btn,
+#pg4 .deco,#pg4 .chip,#pg4 .nomsg,#pg4 .btn,#pg4 .rest-input-lbl,#pg4 .rest-confirm,#pg4 .rest-confirmed-tag,
+#pg5 .deco,#pg5 .chip,#pg5 .nomsg,#pg5 .btn,#pg5 .rv-lbl,#pg5 .rv-nm,#pg5 .travel-title,#pg5 .rest-input-lbl,#pg5 .rest-confirm,#pg5 .rest-confirmed-tag,
+#pg6 .deco,#pg6 .nomsg,#pg6 .btn,
+#pg7 .deco,#pg7 .sig,#pg7 .tl-ttl,#pg7 .tl-sub,#pg7 .btn{
+  font-family:'Nunito',sans-serif !important;
+  letter-spacing:.01em;
+}
+#pg2 .btn,#pg3 .btn,#pg4 .btn,#pg5 .btn,#pg6 .btn,
+#pg4 .rest-confirm,#pg5 .rest-confirm{font-size:.95rem;font-weight:700;}
+#pg2 .deco,#pg3 .deco,#pg4 .deco,#pg5 .deco,#pg6 .deco{font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;}
+#pg2 .greeting{font-size:1.15rem;font-weight:600;}
+#pg4 .rest-input,#pg5 .rest-input{font-family:'Nunito',sans-serif;}
+
+/* ===== CUSTOM RESTAURANT INPUT ===== */
+.rest-input-box{
+  display:none;
+  background:rgba(184,217,240,.18);border:1.5px solid rgba(184,217,240,.55);
+  border-radius:18px;padding:18px 16px;margin-top:14px;
+  animation:fi .4s ease;
+}
+.rest-input-box.show{display:block;}
+.rest-input-lbl{font-family:'Caveat',cursive;font-size:1.05rem;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.rest-input-row{display:flex;gap:8px;align-items:stretch;}
+.rest-input{
+  flex:1;font-family:'Caveat',cursive;font-size:1.05rem;color:var(--navy);
+  background:rgba(255,252,247,.95);border:1.5px solid rgba(44,62,92,.14);
+  border-radius:50px;padding:10px 18px;outline:none;
+  transition:border-color .2s ease;
+}
+.rest-input:focus{border-color:rgba(44,62,92,.35);}
+.rest-input::placeholder{color:var(--muted);}
+.rest-confirm{
+  font-family:'Caveat',cursive;font-size:1rem;font-weight:700;
+  background:var(--navy);color:#fdf8f0;border:none;border-radius:50px;
+  padding:10px 20px;cursor:pointer;white-space:nowrap;
+  transition:all .2s ease;
+}
+.rest-confirm:hover{background:var(--navy2);transform:translateY(-1px);}
+.rest-confirmed-tag{
+  display:none;font-family:'Caveat',cursive;font-size:.95rem;
+  color:var(--navy);background:rgba(184,212,184,.45);
+  border:1.5px solid rgba(184,212,184,.6);border-radius:50px;
+  padding:5px 16px;margin-top:10px;text-align:center;
+}
+.rest-confirmed-tag.show{display:block;animation:fi .3s ease;}
+
+/* ===== MOBILE ===== */
+@media(max-width:480px){
+  .card{padding:24px 20px;border-radius:20px;}
+  .open-card{padding:28px 20px;}
+  .ttl{font-size:1.22rem;}
+  .btn{padding:10px 18px;font-size:.98rem;}
+  .row{flex-direction:column;align-items:stretch;}
+  .row .btn{text-align:center;justify-content:center;}
+  .cel-card{padding:32px 24px;}
+  .card::before{left:28px;}
+}
+@media(max-height:660px){
+  .page{align-items:flex-start;padding-top:10px;}
+}
+
+</style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="clouds">
+  <div class="cld c1"></div><div class="cld c2"></div>
+  <div class="cld c3"></div><div class="cld c4"></div><div class="cld c5"></div>
+</div>
+<div class="petals" id="petals"></div>
+
+<!-- UI chrome -->
+<div class="prog" id="prog">
+  <div class="pd on" id="pd1"></div><div class="pd" id="pd2"></div>
+  <div class="pd" id="pd3"></div><div class="pd" id="pd4"></div>
+  <div class="pd" id="pd5"></div><div class="pd" id="pd6"></div>
+  <div class="pd" id="pd7"></div>
+</div>
+<button class="amb" id="ambBtn" onclick="toggleAmb()" title="Ambient music">🎵</button>
+<canvas id="cnv"></canvas>
+
+<!-- ═══════ PAGE 1 — ENVELOPE ═══════ -->
+<div class="page active" id="pg1">
+  <div class="open-card">
+    <div class="ev-wrap">
+      <div class="envelope fl" id="env" onclick="openEnv()">
+        <div class="ev-body">
+          <div class="ev-tl"></div><div class="ev-tr"></div><div class="ev-tb"></div>
+          <div class="ev-letter">✉&nbsp; May 16<br><span style="font-size:.74rem">from N' Guitar</span></div>
+        </div>
+        <div class="ev-flap"></div>
+        <div class="ev-seal">🌸</div>
+      </div>
+    </div>
+
+    <div class="stars"><span>✦</span><span>✦</span><span>✦</span></div>
+    <p class="op-ttl">Let's Pick Somewhere Special<br>for Book Exchange & More</p>
+    <p class="op-from">For K' Proud, from N' Guitar</p>
+    <p class="op-date">May 16</p>
+    <button class="btn bp" onclick="go(2)">Open Letter &nbsp;✉</button>
+  </div>
+</div>
+
+<!-- ═══════ PAGE 2 — INTRO LETTER ═══════ -->
+<div class="page" id="pg2">
+  <div class="card">
+    <div class="stamp">🌸</div>
+    <p class="deco">— a little note —</p>
+    <h2 class="ttl ttl-i">A Gentle Invitation</h2>
+    <div class="dv"><span>✦</span></div>
+
+    <div style="display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:16px;">
+      <div class="css-fl" style="animation:float 4s ease-in-out infinite;">
+        <div class="fp"></div><div class="fp"></div><div class="fp"></div>
+        <div class="fp"></div><div class="fp"></div><div class="fc"></div>
+      </div>
+      <div class="css-book fl">
+        <div class="bk-cov">
+          <div class="bk-lines">
+            <div class="bk-line"></div><div class="bk-line"></div><div class="bk-line"></div>
+          </div>
+        </div>
+      </div>
+      <div class="css-fl" style="animation:float 4s ease-in-out 1.4s infinite;">
+        <div class="fp" style="background:var(--peach);"></div>
+        <div class="fp" style="background:var(--peach);"></div>
+        <div class="fp" style="background:var(--peach);"></div>
+        <div class="fp" style="background:var(--peach);"></div>
+        <div class="fp" style="background:var(--peach);"></div>
+        <div class="fc"></div>
+      </div>
+    </div>
+
+    <p class="greeting">Hello K' Proud,</p>
+    <p class="body">I was thinking that May 16 could become a gentle little story — not too rushed, not too loud, just a day with good food, a sweet dessert, and a book waiting to be exchanged.</p>
+    <p class="body">Nothing too grand — just a quiet little plan, if you'd like to come along.</p>
+
+    <div class="row">
+      <button class="btn bp" onclick="go(3)">Continue the Story &nbsp;✨</button>
+      <button class="btn bs" id="nb2" onclick="noBtn(2)">No?</button>
+    </div>
+    <div class="nomsg" id="nm2">🌱 That's completely okay — the invitation stays open, just in case. No pressure at all.</div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE 3 — MEETING PLACE ═══════ -->
+<div class="page" id="pg3">
+  <div class="card tb">
+    <p class="deco">— Chapter One —</p>
+    <div class="chip">📍 Samyan Mitrtown</div>
+    <h2 class="ttl">Let's Begin Here</h2>
+    <div class="dv"><span>✦</span></div>
+
+    <div style="text-align:center;font-size:2.4rem;margin:8px 0 14px;" class="fl">🏬</div>
+
+    <p class="body">Let's meet at <strong>Samyan Mitrtown</strong> — a bright, easy place to begin the day.</p>
+    <p class="body">Easy to get to, easy to walk around, and just right for the first page of our little Book Exchange & More plan.</p>
+
+    <div class="row">
+      <button class="btn bp" onclick="go(4)">Yes, sounds good &nbsp;🗺️</button>
+      <button class="btn bs" id="nb3" onclick="noBtn(3)">Maybe somewhere else?</button>
+    </div>
+    <div class="nomsg" id="nm3">🗺️ Of course — if you have somewhere in mind, just tell me and we'll figure it out together.</div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE 4 — AFTER YOU (FIRST!) ═══════ -->
+<div class="page" id="pg4">
+  <div class="card ts">
+    <p class="deco">— Chapter Two —</p>
+    <div class="chip">🍨 After You Dessert Café</div>
+    <h2 class="ttl">Dessert First. Always.</h2>
+    <div class="dv"><span>✦</span></div>
+
+    <div style="text-align:center;font-size:2.5rem;margin:6px 0 14px;" class="fl">🍦</div>
+
+    <p class="body">Why save dessert for last? Let's start with something sweet, cloudy, and a little dramatic — because good days deserve a soft, sweet opening.</p>
+    <p class="body">Something shaved, something honeyed, something that makes you stop mid-bite and just smile.</p>
+
+    <div class="row" style="margin-bottom:4px;">
+      <a href="https://www.google.com/search?q=After+You+Dessert+Cafe+menu+Bangkok" target="_blank" rel="noopener" class="btn bpk">✨ Explore Menu</a>
+      <a href="https://www.google.com/maps/search/After+You+Dessert+Cafe+Samyan+Mitrtown+Bangkok" target="_blank" rel="noopener" class="btn bm">📍 Find on Maps</a>
+    </div>
+    <div class="row">
+      <button class="btn bp" onclick="dessertFirst=true;customDessert=null;go(5)">Dessert first — love it &nbsp;🍦</button>
+      <button class="btn bs" id="nb4" onclick="noBtn(4)">Maybe after lunch?</button>
+      <button class="btn bs" id="nb4b" onclick="showDessertInput()">Not After You?</button>
+    </div>
+    <div class="nomsg" id="nm4">
+      <span>🍜 No problem — let's do lunch first and save the sweet chapter for after.</span>
+      <button class="btn bp" style="margin-top:14px;width:100%;justify-content:center;" onclick="altPlan()">
+        Continue with lunch first &nbsp;→
+      </button>
+    </div>
+    <div class="rest-input-box" id="dessert-input-box">
+      <p class="rest-input-lbl">🍰 Which dessert place are you thinking?</p>
+      <div class="rest-input-row">
+        <input class="rest-input" id="dessert-input" type="text" placeholder="Type a dessert place…" maxlength="60"
+          onkeydown="if(event.key==='Enter')confirmDessert()">
+        <button class="rest-confirm" onclick="confirmDessert()">Use this →</button>
+      </div>
+      <div class="rest-confirmed-tag" id="dessert-confirmed-tag"></div>
+      <div id="dessert-order-btns" style="display:none;gap:8px;margin-top:10px;flex-wrap:wrap;">
+        <button class="btn bp" style="flex:1;" onclick="dessertFirst=true;go(5)">Before lunch 🍦</button>
+        <button class="btn bs" style="flex:1;" onclick="dessertFirst=false;go(5)">After lunch 🍜</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE 5 — LUNCH ═══════ -->
+<div class="page" id="pg5">
+  <div class="card card-wide tw">
+    <div class="inner">
+      <p class="deco">— Chapter Three —</p>
+      <div class="chip">🍱 The Japan Restaurant · สาทร</div>
+      <h2 class="ttl">Then Something Warm</h2>
+      <div class="dv"><span>✦</span></div>
+
+      <p class="body">After something sweet, let's settle into something warm and grounding — a relaxed lunch, soft conversations, and probably a tiny debate about what to order first.</p>
+
+      <div class="travel-box">
+        <div class="travel-title">🗺️ Getting There</div>
+        <div class="travel-row">
+          <span class="travel-icon">📍</span>
+          <span class="travel-text"><strong>ย่านสาทร (Sathorn)</strong>, กรุงเทพฯ</span>
+        </div>
+        <div class="travel-row">
+          <span class="travel-icon">🚗</span>
+          <span class="travel-text">จากจุฬาฯ ขับรถประมาณ <strong>10–15 นาที</strong></span>
+        </div>
+        <div class="travel-row">
+          <span class="travel-icon">🕐</span>
+          <span class="travel-text">เปิด 11:00 – 22:00 น. ทุกวัน</span>
+        </div>
+      </div>
+
+      <div class="row" style="margin-bottom:16px;">
+        <a href="https://maps.app.goo.gl/CUKDJ5mPQb4UPhSG6" target="_blank" rel="noopener" class="btn bm">📍 Open Google Maps</a>
+        <a href="https://maps.app.goo.gl/CUKDJ5mPQb4UPhSG6" target="_blank" rel="noopener" class="btn bs">⭐ Read Reviews</a>
+        <button class="btn bs" style="font-size:.92rem;padding:9px 16px;" onclick="toggleRev()">💬 Sample Reviews</button>
+      </div>
+
+      <div id="rev" style="display:none;animation:fi .35s ease;">
+        <p class="rv-lbl">— What others are saying —</p>
+        <div class="rv-cards">
+          <div class="rv-card">
+            <div class="rv-hd">
+              <div class="rv-av" style="background:#7a9cbf;">S</div>
+              <span class="rv-nm">Sirin K.</span>
+              <span class="rv-st">★★★★★</span>
+            </div>
+            <p class="rv-tx">"The ramen broth has that deep, slow-cooked warmth. Came on a quiet afternoon and left genuinely happy."</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-hd">
+              <div class="rv-av" style="background:#b08060;">P</div>
+              <span class="rv-nm">Pim T.</span>
+              <span class="rv-st">★★★★★</span>
+            </div>
+            <p class="rv-tx">"Lovely atmosphere, unhurried pace. The set lunch is excellent value. Always end up staying longer than planned."</p>
+          </div>
+          <div class="rv-card">
+            <div class="rv-hd">
+              <div class="rv-av" style="background:#8ea87a;">N</div>
+              <span class="rv-nm">Nat W.</span>
+              <span class="rv-st">★★★★☆</span>
+            </div>
+            <p class="rv-tx">"Solid Japanese comfort food. Genuinely calm atmosphere — perfect for lunch where you actually want to talk."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <button class="btn bp" onclick="confirmJapan()">Yes, let's go &nbsp;🍜</button>
+        <button class="btn bs" id="nb5" onclick="showRestInput()">Not this restaurant?</button>
+      </div>
+
+      <!-- custom restaurant input -->
+      <div class="rest-input-box" id="rest-input-box">
+        <p class="rest-input-lbl">🍽️ Which restaurant are you thinking?</p>
+        <div class="rest-input-row">
+          <input class="rest-input" id="rest-input" type="text" placeholder="Type a restaurant name…" maxlength="60"
+            onkeydown="if(event.key==='Enter')confirmRest()">
+          <button class="rest-confirm" onclick="confirmRest()">Use this →</button>
+        </div>
+        <div class="rest-confirmed-tag" id="rest-confirmed-tag"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE 6 — BOOK EXCHANGE ═══════ -->
+<div class="page" id="pg6">
+  <div class="card">
+    <p class="deco">— The Main Chapter —</p>
+    <div style="text-align:center;font-size:2.4rem;margin-bottom:12px;" class="fl">📚</div>
+    <h2 class="ttl" style="text-align:center;">The Book Exchange</h2>
+    <div class="dv"><span>✦</span></div>
+
+    <p class="body">Bring one book — something you like, something meaningful, or something that simply <em>feels like you</em>. I'll bring one too.</p>
+    <p class="body">Then we exchange not just books, but tiny pieces of our worlds.</p>
+
+    <div class="stars" style="margin-bottom:4px;"><span>✦</span><span>✦</span><span>✦</span></div>
+
+    <div class="row">
+      <button class="btn bp" onclick="go(7)">I'll bring a book &nbsp;📖</button>
+      <button class="btn bs" id="nb6" onclick="noBtn(6)">Make it a secret</button>
+    </div>
+    <div class="nomsg" id="nm6">📦 A mystery book — I love it. Let's surprise each other completely. See you with something wrapped.</div>
+  </div>
+</div>
+
+<!-- ═══════ PAGE 7 — FINAL SUMMARY ═══════ -->
+<div class="page" id="pg7">
+  <div class="card">
+    <div class="inner">
+      <p class="deco">— Our Little Plan —</p>
+      <h2 class="ttl ttl-i" style="text-align:center;">May 16</h2>
+      <!-- plan badge -->
+      <div id="plan-badge" style="display:flex;justify-content:center;margin-bottom:16px;">
+        <span id="plan-label" style="font-family:'Nunito',sans-serif;font-size:.95rem;color:var(--muted);background:rgba(184,217,240,.35);border:1.5px solid rgba(184,217,240,.6);border-radius:50px;padding:4px 16px;letter-spacing:.04em;"></span>
+      </div>
+
+      <p style="text-align:center;font-family:'Nunito',sans-serif;color:var(--muted);margin-bottom:18px;font-size:1rem;">A day that goes something like this…</p>
+
+      <!-- dynamic timeline -->
+      <div class="tl" id="dynamic-tl"></div>
+
+      <div class="dv" style="margin-top:20px;"><span>✦</span></div>
+
+      <p class="sig">— N' Guitar</p>
+
+      <!-- screenshot hint -->
+      <div style="text-align:center;margin-bottom:16px;">
+        <span style="font-family:'Nunito',sans-serif;font-size:.9rem;color:var(--muted);background:rgba(248,213,176,.35);border-radius:50px;padding:4px 14px;">📸 Screenshot this to confirm your plan</span>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="btn bg" style="font-size:1.1rem;padding:13px 32px;" onclick="celebrate()">
+          Accept This Little Adventure &nbsp;🌸
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ CELEBRATION ═══════ -->
+<div class="cel" id="cel">
+  <div class="cel-card">
+    <span class="cel-em">🌸</span>
+    <p class="cel-ttl">See you on May 16!</p>
+    <p class="cel-msg">Can't wait for our little adventure together, K' Proud.<br>I'll bring the book — and a good playlist. 🎵</p>
+    <p style="font-family:'Caveat',cursive;color:var(--muted);font-size:.96rem;margin-bottom:18px;">— N' Guitar</p>
+    <button class="btn bp" onclick="document.getElementById('cel').classList.remove('show');">Close &nbsp;✕</button>
+  </div>
+</div>
+
+<script>
+/* ===== STATE ===== */
+let cur=1, envOpened=false, dessertFirst=true;
+
+/* ===== PAGE NAV ===== */
+function go(n){
+  if(n===cur)return;
+  const from=document.getElementById('pg'+cur);
+  const to=document.getElementById('pg'+n);
+  if(!to)return;
+  from.classList.add('exit');
+  from.classList.remove('active');
+  setTimeout(()=>{
+    from.classList.remove('exit');
+    to.classList.add('active');
+    cur=n;
+    updProg();
+    if(n===7) renderTimeline();
+    const sc=to.querySelector('.inner');
+    if(sc)sc.scrollTop=0;
+  },650);
+}
+
+/* ===== ALTERNATE PLAN (lunch first) ===== */
+function altPlan(){
+  dessertFirst=false;
+  go(5);
+}
+
+/* ===== CUSTOM RESTAURANT ===== */
+let customRestaurant=null;
+
+function confirmJapan(){
+  customRestaurant=null;
+  go(6);
+}
+
+function showRestInput(){
+  const btn=document.getElementById('nb5');
+  btn.classList.add('wg');
+  setTimeout(()=>btn.classList.remove('wg'),450);
+  const box=document.getElementById('rest-input-box');
+  box.classList.add('show');
+  setTimeout(()=>document.getElementById('rest-input').focus(),100);
+}
+
+function confirmRest(){
+  const inp=document.getElementById('rest-input');
+  const name=inp.value.trim();
+  if(!name)return;
+  customRestaurant=name;
+  const tag=document.getElementById('rest-confirmed-tag');
+  tag.textContent='✓ Got it — "'+name+'" is in the plan!';
+  tag.classList.add('show');
+  setTimeout(()=>go(6),1200);
+}
+
+/* ===== DYNAMIC TIMELINE ===== */
+function renderTimeline(){
+  const tl=document.getElementById('dynamic-tl');
+  const lbl=document.getElementById('plan-label');
+  if(!tl)return;
+
+  const restName   = customRestaurant ? customRestaurant : 'The Japan Restaurant · สาทร';
+  const restSub    = customRestaurant ? 'A new chapter — chosen by K\' Proud' : 'Warm, calm, with a tiny debate about what to order';
+  const dessertName= customDessert    ? customDessert    : 'After You';
+  const dessertSub = customDessert    ? 'A sweet pick — chosen by K\' Proud'  : 'Something sweet and dramatic to open the day';
+
+  const planA=[
+    {i:'📍',t:'Meet at Samyan Mitrtown',s:'Where the day begins — bright, easy, and open'},
+    {i:'🍦',t:'Dessert first — '+dessertName,s:dessertSub},
+    {i:'🍜',t:'Lunch at '+restName,s:restSub},
+    {i:'📚',t:'Book Exchange & More',s:'One book each — tiny pieces of our worlds, traded'},
+    {i:'🚶',t:'Walk, talk, and see where the day goes',s:'No rush — just wherever the story takes us'},
+  ];
+  const planB=[
+    {i:'📍',t:'Meet at Samyan Mitrtown',s:'Where the day begins — bright, easy, and open'},
+    {i:'🍜',t:'Lunch at '+restName,s:restSub},
+    {i:'🍦',t:'Dessert at '+dessertName,s:customDessert?'A sweet pick — chosen by K\' Proud':'Something sweet to close the afternoon'},
+    {i:'📚',t:'Book Exchange & More',s:'One book each — tiny pieces of our worlds, traded'},
+    {i:'🚶',t:'Walk, talk, and see where the day goes',s:'No rush — just wherever the story takes us'},
+  ];
+
+  const plan=dessertFirst?planA:planB;
+  if(lbl) lbl.textContent=dessertFirst?'✦ Plan A — Dessert First':'✦ Plan B — Lunch First';
+
+  tl.innerHTML=plan.map(p=>`
+    <div class="tl-item">
+      <div class="tl-dot">${p.i}</div>
+      <div><p class="tl-ttl">${p.t}</p><p class="tl-sub">${p.s}</p></div>
+    </div>`).join('');
+}
+
+function updProg(){
+  for(let i=1;i<=7;i++){
+    const d=document.getElementById('pd'+i);
+    if(d)d.classList.toggle('on',i===cur);
+  }
+}
+
+/* ===== ENVELOPE ===== */
+function openEnv(){
+  if(envOpened)return;
+  envOpened=true;
+  document.getElementById('env').classList.add('open');
+}
+
+/* ===== NO BUTTONS ===== */
+function noBtn(n){
+  const btn=document.getElementById('nb'+n);
+  const msg=document.getElementById('nm'+n);
+  btn.classList.add('wg');
+  setTimeout(()=>btn.classList.remove('wg'),450);
+  if(msg)msg.classList.add('show');
+  if(n===6)setTimeout(()=>go(7),2200);
+}
+
+/* ===== TOGGLE REVIEWS ===== */
+function toggleRev(){
+  const r=document.getElementById('rev');
+  r.style.display=r.style.display==='none'?'block':'none';
+}
+
+/* ===== CELEBRATE ===== */
+function celebrate(){
+  document.getElementById('cel').classList.add('show');
+  document.getElementById('cnv').classList.add('show');
+  runConfetti();
+}
+
+/* ===== CONFETTI ===== */
+function runConfetti(){
+  const cv=document.getElementById('cnv');
+  const cx=cv.getContext('2d');
+  cv.width=window.innerWidth;
+  cv.height=window.innerHeight;
+  const cols=['#f2b8c6','#b8d9f0','#f8d5b0','#b8d4b8','#d4a853','#e8d0f0','#fdf6ec'];
+  let alive=true;
+  const ps=Array.from({length:130},()=>({
+    x:Math.random()*cv.width,
+    y:Math.random()*cv.height-cv.height,
+    r:Math.random()*7+3,
+    c:cols[Math.floor(Math.random()*cols.length)],
+    sp:Math.random()*2.2+.8,
+    dr:(Math.random()-.5)*1.4,
+    rot:Math.random()*Math.PI*2,
+    rs:(Math.random()-.5)*.07,
+    op:Math.random()*.4+.55,
+    sq:Math.random()>.5,
+    wt:Math.random()*Math.PI*2,
+  }));
+  (function draw(){
+    if(!alive)return;
+    cx.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p=>{
+      p.y+=p.sp;p.x+=p.dr+Math.sin(p.wt)*.4;
+      p.rot+=p.rs;p.wt+=.02;
+      if(p.y>cv.height+20){p.y=-20;p.x=Math.random()*cv.width;}
+      cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot);
+      cx.globalAlpha=p.op;cx.fillStyle=p.c;
+      if(p.sq){cx.fillRect(-p.r,-p.r*.4,p.r*2,p.r*.8);}
+      else{cx.beginPath();cx.arc(0,0,p.r,0,Math.PI*2);cx.fill();}
+      cx.restore();
+    });
+    requestAnimationFrame(draw);
+  })();
+  setTimeout(()=>{alive=false;cx.clearRect(0,0,cv.width,cv.height);},9000);
+}
+
+/* ===== PETALS ===== */
+function mkPetals(){
+  const layer=document.getElementById('petals');
+  const pc=['#f2b8c6','#fdd5e0','#f8d5b0','#ddd0f0','#b8d9f0'];
+  for(let i=0;i<22;i++){
+    const el=document.createElement('div');
+    el.className='petal';
+    const sz=Math.random()*10+5;
+    el.style.cssText=`width:${sz}px;height:${sz*.62}px;left:${Math.random()*100}%;background:${pc[Math.floor(Math.random()*pc.length)]};animation-duration:${Math.random()*14+9}s;animation-delay:${Math.random()*20}s;`;
+    layer.appendChild(el);
+  }
+}
+
+/* ===== AMBIENT (Web Audio API) ===== */
+let actx=null,ambOn=false,ambNodes=[],ambTmr=null;
+const N={C4:261.63,D4:293.66,E4:329.63,F4:349.23,G4:392,A4:440,B4:493.88,C5:523.25,G3:196,E3:164.81,C3:130.81};
+
+function toggleAmb(){
+  if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();
+  const btn=document.getElementById('ambBtn');
+  if(ambOn){
+    ambOn=false;
+    ambNodes.forEach(n=>{try{n.stop(0);}catch(e){}});
+    ambNodes=[];if(ambTmr)clearTimeout(ambTmr);
+    btn.classList.remove('on');btn.textContent='🎵';
+  }else{
+    ambOn=true;btn.classList.add('on');btn.textContent='🎶';
+    playBox();
+  }
+}
+
+function tone(f,t0,dur,vol=.055,type='sine'){
+  const o=actx.createOscillator(),g=actx.createGain();
+  o.type=type;o.frequency.value=f;
+  g.gain.setValueAtTime(0,t0);
+  g.gain.linearRampToValueAtTime(vol,t0+.04);
+  g.gain.exponentialRampToValueAtTime(.001,t0+dur);
+  o.connect(g);g.connect(actx.destination);
+  o.start(t0);o.stop(t0+dur+.05);
+  ambNodes.push(o);
+}
+
+function playBox(){
+  if(!ambOn)return;
+  ambNodes=[];
+  const mel=[[N.C4,.5],[N.E4,.5],[N.G4,.5],[N.E4,.5],[N.C5,.7],[N.B4,.3],[N.A4,.5],[N.G4,.8],[N.F4,.5],[N.E4,.5],[N.D4,.5],[N.C4,1.0]];
+  const step=.62;
+  const now=actx.currentTime;
+  let t=now;
+  mel.forEach(([f,d])=>{tone(f,t,d*.88,.052);t+=step*d;});
+  const tot=step*mel.reduce((s,[,d])=>s+d,0);
+  [[N.C3,.016],[N.G3,.013],[N.E3,.011]].forEach(([f,v])=>{
+    const o=actx.createOscillator(),g=actx.createGain();
+    o.type='sine';o.frequency.value=f;
+    g.gain.setValueAtTime(0,now);g.gain.linearRampToValueAtTime(v,now+.6);
+    g.gain.setValueAtTime(v,now+tot*.55);g.gain.linearRampToValueAtTime(0,now+tot*.88);
+    o.connect(g);g.connect(actx.destination);o.start(now);o.stop(now+tot);
+    ambNodes.push(o);
+  });
+  ambTmr=setTimeout(()=>{if(ambOn)playBox();},(tot-.25)*1000);
+}
+
+/* ===== CUSTOM DESSERT ===== */
+let customDessert=null;
+
+function showDessertInput(){
+  const btn=document.getElementById('nb4b');
+  btn.classList.add('wg');
+  setTimeout(()=>btn.classList.remove('wg'),450);
+  document.getElementById('dessert-input-box').classList.add('show');
+  setTimeout(()=>document.getElementById('dessert-input').focus(),100);
+}
+
+function confirmDessert(){
+  const inp=document.getElementById('dessert-input');
+  const name=inp.value.trim();
+  if(!name)return;
+  customDessert=name;
+  const tag=document.getElementById('dessert-confirmed-tag');
+  tag.textContent='✓ "'+name+'" saved — when would you like it?';
+  tag.classList.add('show');
+  document.getElementById('dessert-order-btns').style.display='flex';
+}
+
+/* ===== INIT ===== */
+document.addEventListener('DOMContentLoaded',()=>{
+  mkPetals();
+  window.addEventListener('resize',()=>{
+    const cv=document.getElementById('cnv');
+    cv.width=window.innerWidth;cv.height=window.innerHeight;
+  });
+});
+</script>
+</body>
+</html>
